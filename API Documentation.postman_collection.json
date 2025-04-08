@@ -1,0 +1,479 @@
+{
+	"info": {
+		"_postman_id": "7b8a80d4-2035-44f9-8d12-75d433ab8221",
+		"name": "API Documentation",
+		"description": "StartFragment\n\n# Visão Geral\n\nA API **Usuário & Tarefa** permite a gestão de usuários autenticados e suas respectivas tarefas. Com essa API, é possível criar, recuperar, atualizar e excluir usuários e tarefas de forma segura e eficiente.\n\n# Guia de Início Rápido\n\nPara começar a usar a API **Usuário & Tarefa**, siga estas etapas:\n\n1. Registre um novo usuário por meio do endpoint `POST /api/users/create`.\n    \n2. Autentique-se usando o endpoint `POST /api/users/login`, fornecendo email e senha.\n    \n3. Utilize o token JWT recebido para acessar os endpoints protegidos.\n    \n4. Gerencie tarefas do usuário autenticado por meio dos endpoints da API de tarefas.\n    \n\n# Autenticação\n\nA API **Usuário & Tarefa** utiliza autenticação via **JWT (JSON Web Token)**.\n\n- Authorization: Bearer {seu_token_aqui}\n    \n- Caso um token inválido ou ausente seja detectado, a API retornará um erro `401 Unauthorized`.\n    \n\n# Endpoints\n\n## Usuários\n\n### Criar Usuário\n\n**POST** `/api/users/create`\n\n**Corpo da Requisição:**\n\n``` json\n{\n  \"nome\": \"João da Silva\",\n  \"email\": \"joao@email.com\",\n  \"senha\": \"123456\"\n}\n\n ```\n\n**Resposta de Sucesso (201 Created):**\n\n``` json\n{\n  \"id\": 1,\n  \"nome\": \"João da Silva\",\n  \"email\": \"joao@email.com\"\n}\n\n ```\n\n### Login\n\n**POST** `/api/users/login`\n\n**Corpo da Requisição:**\n\n``` json\n{\n  \"email\": \"joao@email.com\",\n  \"senha\": \"123456\"\n}\n\n ```\n\n**Resposta de Sucesso (200 OK):**\n\n``` json\n{\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR...\",\n  \"id\": 1\n}\n\n ```\n\n## Tarefas\n\n### Criar Tarefa\n\n**POST** `/api/auth/task/{id}/create-task`\n\n**Corpo da Requisição:**\n\n``` json\n{\n  \"titulo\": \"Finalizar Projeto\",\n  \"descricao\": \"Terminar a documentação do sistema\",\n  \"dataVencimento\": \"2025-02-25\"\n}\n\n ```\n\n**Resposta de Sucesso (201 Created):**\n\n``` json\n{\n  \"id\": 10,\n  \"titulo\": \"Finalizar Projeto\",\n  \"descricao\": \"Terminar a documentação do sistema\",\n  \"dataVencimento\": \"2025-02-25\",\n  \"status\": \"Pendente\"\n}\n\n ```\n\n### Buscar Tarefas\n\n**GET** `/api/auth/task`\n\n**Resposta de Sucesso (200 OK):**\n\n``` json\n[\n  {\n    \"id\": 10,\n    \"titulo\": \"Finalizar Projeto\",\n    \"descricao\": \"Terminar a documentação do sistema\",\n    \"dataVencimento\": \"2025-02-25\",\n    \"status\": \"Pendente\"\n  }\n]\n\n ```\n\n### Atualizar Tarefa\n\n**PUT** `/api/auth/task/{id}/update-task`\n\n**Corpo da Requisição:**\n\n``` json\n{\n  \"titulo\": \"Revisar Documentação\",\n  \"descricao\": \"Verificar erros no texto\",\n  \"dataVencimento\": \"2025-02-26\",\n  \"status\": \"Em andamento\"\n}\n\n ```\n\n### Excluir Tarefa\n\n**DELETE** `/api/auth/task/{id}`\n\n**Resposta de Sucesso (200 OK)**\n\n# Limites de Uso e Erros\n\nA API possui as seguintes limitações:\n\n- **Limite de 300 requisições por minuto**.\n    \n- **Se ultrapassar o limite, retorna um erro** **`429 Too Many Requests`**.\n    \n- **Se houver um erro interno do servidor, retorna** **`503 Service Unavailable`**.\n    \n\n# Suporte e Ajuda\n\nSe precisar de ajuda, consulte nossa documentação completa em ((link para documentação)).  \nOu visite nosso fórum de desenvolvedores para tirar dúvidas em ((link do fórum)).\n\nEndFragment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20511587"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "GET USER BY ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Me",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"me"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CREATE USER",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Steff Kerry Toussaint\",\r\n  \"email\": \"steff1@email.com\",\r\n  \"password\": \"Senha@123\"\r\n}\r\n\r\n/*\r\n\r\n{\r\n  \"name\": \"Piard Ritchy Toussaint\",\r\n  \"email\": \"piard@email.com\",\r\n  \"password\": \"Senha@123\"\r\n}\r\n\r\n*/\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/create",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN ACCOUNT",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"steff1@email.com\",\r\n    \"password\": \"Senha@123\"\r\n}\r\n\r\n\r\n/*\r\n\r\n{\r\n  \"email\": \"piard@email.com\",\r\n  \"password\": \"Senha@123\"\r\n}\r\n\r\n*/\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST VALIDATE TOKEN",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6InN0ZWZmMUBlbWFpbC5jb20iLCJleHAiOjE3Mzk3NjA0MzF9._IU7e9XCYr0hePClZsY3krfkGrvFtFl3QTh2Zi2DR9c",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/validateToken",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"validateToken"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "StartFragment\n\n### **1\\. Configurar a Requisição**\n\n- **Método:** `POST`\n    \n- **URL:** `http://localhost:8080/api/users/create`\n    \n- **Headers:**\n    \n    - `Content-Type: application/json`\n        \n\n`{`\n\n`\"nome\": \"João da Silva\",`\n\n`\"email\": \"joao@email.com\",`\n\n`\"senha\": \"123456\"`\n\n`}`\n\n- ⚠️ O JSON precisa corresponder ao DTO `CreateRequestDTO`, então certifique-se de que os campos estão corretos.\n    \n\n---\n\n### **2\\. Enviar a Requisição**\n\nClique em **Send** e verifique a resposta.\n\n---\n\n### **3\\. Possíveis Respostas**\n\n`{ \"id\": 1, \"nome\": \"João da Silva\", \"email\": \"joao@email.com\"}`\n\n`{ \"timestamp\": \"2025-02-19T12:34:56\", \"status\": 400, \"error\": \"Bad Request\", \"message\": \"O campo email é obrigatório\"}`\n\n`{ \"timestamp\": \"2025-02-19T12:34:56\", \"status\": 409, \"error\": \"Conflict\", \"message\": \"Email já cadastrado. Tente outro.\"}`\n\nSe o seu servidor estiver rodando em outra porta, ajuste a URL (`http://localhost:8080`) conforme necessário."
+		},
+		{
+			"name": "Task",
+			"item": [
+				{
+					"name": "CREATE TASK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titulo\": \"Finalizar relatório\",\n    \"descricao\": \"Escrever e revisar o relatório final do projeto\",\n    \"dataVencimento\": \"2025-02-18\",\n    \"status\": \"EM_ANDAMENTO\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/task/1/create-task",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"task",
+								"1",
+								"create-task"
+							],
+							"query": [
+								{
+									"key": "workspace",
+									"value": "",
+									"description": "Optional. A workspace ID in which to create the collection.\n\nIf you do not include this query parameter, the system creates the collection in your \"My Workspace\" workspace.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Creates a collection using the [Postman Collection v2 schema format](https://schema.postman.com/json/collection/v2.1.0/docs/index.html). Include a `collection` object in the request body that contains the following required properties:\n\n*   `info` — An **object** that contains the following properties:\n    *   `name` — A **string** value that contains the collection's name.\n    *   `schema` — A **string** that contains a URL to the collection's schema. For example, the `https://schema.getpostman.com/collection/v1` URL.\n*   `item` — An **object** that contains the HTTP request and response information.\n    *   `request` — An **object** that contains the collection's request information. For a complete list of values, refer to the `definitions.request` entry in the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json). If you pass an empty object for this value, the system defaults to an untitled GET request.\n\n**Note:**\n\n*   For a complete list of available property values for this endpoint, use the following references available in the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json):\n    *   `info` object — Use the `definitions.info` entry.\n    *   `item` object — Use the `definitions.items` entry.\n*   For all other possible values, refer to the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL TASK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6InRlc3RlQGdtYWlsLmNvbSJ9.a3lfv-n5ysET7UBUaWQKSECEI4yNos0MTI-lW0kjFGU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/task",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"task"
+							],
+							"query": [
+								{
+									"key": "access_key",
+									"value": "{{accessKey}}",
+									"description": "Optional. A collection's read-only access key. Using this query parameter does not require an API key to call the endpoint.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets information about a collection. For a complete list of this endpoint's possible values, use the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE TASK BY ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"titulo\": \"Finalizar relatório\",\n    \"descricao\": \"ever e revisar o relatório final do projeto\",\n    \"dataVencimento\": \"2025-02-20\",\n    \"status\": \"CONCLUIDO\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/task/1/update-task",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"task",
+								"1",
+								"update-task"
+							]
+						},
+						"description": "Updates a collection using the [Postman Collection v2 schema format](https://schema.postman.com/json/collection/v2.1.0/docs/index.html). Include a `collection` object in the request body that contains the following required properties:\n\n- `info` — An **object** that contains the following properties:\n    - `name` — A **string** value that contains the collection's name.\n    - `schema` — A **string** that contains a URL to the collection's schema. For example, the `https://schema.getpostman.com/collection/v1` URL.\n- `item` — An **object** that contains the HTTP request and response information.\n    - `request` — An **object** that contains the collection's request information. For a complete list of values, refer to the `definitions.request` entry in the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json). If you pass an empty object for this value, the system defaults to an untitled GET request.\n\n**Note:**\n\n- For a complete list of available property values for this endpoint, use the following references available in the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json):\n    - `info` object — Use the `definitions.info` entry.\n    - `item` object — Use the `definitions.items` entry.\n- For all other possible values, refer to the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json).\n    \n\n### Important\n\nUse caution when using this endpoint. The system will replace the existing collection with the values passed in the request body."
+					},
+					"response": []
+				},
+				{
+					"name": "GET TASK BY ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/Auth/task/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Auth",
+								"task",
+								"1"
+							],
+							"query": [
+								{
+									"key": "workspace",
+									"value": "",
+									"description": "Optional. A workspace ID.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets all of your [collections](https://www.getpostman.com/docs/collections). The response includes all of your subscribed collections."
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE TASK BY ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/Auth/task/3",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Auth",
+								"task",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "The `/collections` endpoints let you manage your [collections](https://learning.postman.com/docs/sending-requests/intro-to-collections/)."
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "X-API-Key",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://farming-simulator.pstmn.io"
+		}
+	]
+}
