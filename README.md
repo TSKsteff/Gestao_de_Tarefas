@@ -1,4 +1,4 @@
-# Desafio Técnico - Gestão de Tarefas
+# Desafio - Gestão de Tarefas
 
 ## Objetivo
 
