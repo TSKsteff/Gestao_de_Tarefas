@@ -7,7 +7,6 @@ import Todo from "../../components/todo/Todo";
 import TodoForm from "../../components/todo/TodoForm";
 import "./App.css";
 import Modal from "../../components/Modal";
-import Signin from "../Signin";
 
 const Home = () => {
   const { signout, tokenValid } = useAuth();
@@ -29,7 +28,6 @@ const Home = () => {
   useEffect(() => {
     loadTasks();
   }, []);
-
   // Carregar as tarefas da API
   const loadTasks = async () => {
     try {
@@ -93,7 +91,7 @@ const Home = () => {
     }, 5000);*/
 
     try {
-      const task = await createTask(userId, newTask, token);
+      const task = await createTask(newTask, userId, token);
       setTasks([...tasks, task]);
       localStorage.setItem("tasks", JSON.stringify([...tasks, task]));
     } catch (error) {

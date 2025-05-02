@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
 
   const signin = async (email, password) => {
     try {
-      const response = await fetch("https://localhost:8443/api/users/login", {
+      const response = await fetch("http://localhost:8000/api/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (name, email, password) => {
     try {
-      const response = await fetch("https://localhost:8443/api/users/create", {
+      const response = await fetch("http://localhost:8000/api/users/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,7 +81,7 @@ export const AuthProvider = ({ children }) => {
 
   const getUserById = async (id, token) => {
     try {
-      const response = await fetch(`https://localhost:8443/api/auth/${id}`, {
+      const response = await fetch(`http://localhost:8000/api/auth/${id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -96,7 +96,7 @@ export const AuthProvider = ({ children }) => {
 
   const getMe = async (token) => {
     try {
-      const response = await fetch(`https://localhost:8443/api/auth/me`, {
+      const response = await fetch(`http://localhost:8000/api/auth/me`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -117,7 +117,7 @@ export const AuthProvider = ({ children }) => {
         return null;
       }
   
-      const response = await fetch("https://localhost:8443/api/auth/task", {
+      const response = await fetch("http://localhost:8000/api/auth/task", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -139,7 +139,7 @@ export const AuthProvider = ({ children }) => {
   
   const updateTask = async (id, task, token) => {
     try {
-      await fetch(`https://localhost:8443/api/auth/task/${id}/update-task`, {
+      await fetch(`http://localhost:8000/api/auth/task/${id}/update-task`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -157,7 +157,7 @@ export const AuthProvider = ({ children }) => {
   
   const deleteTask = async (id, token) => {
     try {
-      await fetch(`https://localhost:8443/api/auth/task/${id}`, {
+      await fetch(`http://localhost:8000/api/auth/task/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -173,7 +173,7 @@ export const AuthProvider = ({ children }) => {
   
   const getTaskById = async (id, token) => {
     try {
-      const response = await fetch(`https://localhost:8443/api/auth/task/${id}`, {
+      const response = await fetch(`http://localhost:8000/api/auth/task/${id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -188,7 +188,7 @@ export const AuthProvider = ({ children }) => {
   
   const createTask = async (task, userId, token) => {
     try {
-      await fetch(`https://localhost:8443/usuarios`, {
+      await fetch(`http://localhost:8000/api/auth/task/${userId}/create-task`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
